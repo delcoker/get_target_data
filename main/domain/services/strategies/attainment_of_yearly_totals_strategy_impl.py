@@ -1,7 +1,7 @@
-from main.domain.services.interfaces.attainment_table_strategy import AttainmentTableStrategy
+from main.domain.services.interfaces.attainment_table_strategy_service import AttainmentTableStrategyService
 
 
-class AttainmentOfYearlyTotalsStrategy(AttainmentTableStrategy):
+class AttainmentOfYearlyTotalsStrategyImpl(AttainmentTableStrategyService):
 
     def calculation(self, dataset):
         copy_of_dataset = dataset.copy()

@@ -1,5 +1,4 @@
 from main.domain.services.calculate_attainment_of_quarter_totals_service_impl import CalculateAttainmentOfQuarterTotalsServiceImpl
-from main.domain.services.calculate_attainment_of_quarter_totals_service_impl_2 import CalculateAttainmentOfQuarterTotalsServiceImpl2
 from main.domain.services.calculate_attainment_of_yearly_totals_service_impl import CalculateAttainmentOfYearlyTotalsServiceImpl
 from main.domain.services.calculate_attainment_table_one_service_impl import CalculateAttainmentTableOneServiceImpl
 from main.domain.services.calculate_c_model_service_impl import CalculateCModelServiceImpl
@@ -10,7 +9,6 @@ from main.domain.services.calculate_quarter_totals_service_impl import Calculate
 from main.domain.services.calculate_yearly_totals_for_each_product_service_impl import CalculateYearlyTotalsForEachProductServiceImpl
 from main.domain.services.create_new_column_in_data_frame_service_impl import CreateNewColumnInDataFrameServiceImpl
 from main.domain.services.extract_closed_won_data_service_impl import ExtractClosedWonDataService
-from main.domain.services.extract_data_based_on_number_of_years_service_impl import ExtractDataBasedOnNumberOfYearsServiceImpl
 from main.domain.services.get_monthly_revenue_for_products_service_impl import GetMonthlyRevenueForProductsService
 from main.domain.services.interfaces.data_etl_service import DataEtlService
 from main.domain.services.interfaces.extract_data_service import ExtractDataService
@@ -45,7 +43,7 @@ class TargetDataServiceImpl(TargetDataService):
 
         merged_quarter_totals_with_listed_products_with_quarters = MergeDataServiceImpl.merge_quarter_totals_with_main_data_frame(merged_monthly_totals_with_listed_products_with_quarters,
                                                                                                                                   calculated_quarter_totals)
-        attainment_quarter_totals_with_listed_products_with_quarters = CalculateAttainmentOfQuarterTotalsServiceImpl2.calculate_attainment_of_quarter_totals(
+        attainment_quarter_totals_with_listed_products_with_quarters = CalculateAttainmentOfQuarterTotalsServiceImpl.calculate_attainment_of_quarter_totals(
             merged_quarter_totals_with_listed_products_with_quarters)
         calculated_yearly_totals_for_each_product = CalculateYearlyTotalsForEachProductServiceImpl.calculate_yearly_totals_for_each_product(
             merged_quarter_totals_with_listed_products_with_quarters)
