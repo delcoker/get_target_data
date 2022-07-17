@@ -4,6 +4,6 @@ from main.domain.services.interfaces.attainment_table_strategy_service import At
 class AttainmentOfYearlyTotalsStrategyImpl(AttainmentTableStrategyService):
 
     def calculation(self, dataset):
-        copy_of_dataset = dataset.copy()
-        copy_of_dataset['ATT Year Total'] = copy_of_dataset['ARR'] / copy_of_dataset['Total Arr Yearly']
-        return copy_of_dataset
+        calculated_yearly_totals_for_each_product = dataset.copy()
+        calculated_yearly_totals_for_each_product = calculated_yearly_totals_for_each_product.groupby(['Year', 'Product Name'])['ARR'].sum().reset_index(name='Total Arr Yearly')
+        return calculated_yearly_totals_for_each_product
