@@ -10,3 +10,10 @@ class ModelData:
         self.totalRevenue = total_revenue
         self.revenueType = revenue_type
         self.modelType = model_type
+
+    def __str__(self):
+        return self.__dict__
+
+    def __repr__(self):
+        return self.__dict__
+
