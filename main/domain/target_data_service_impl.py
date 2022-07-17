@@ -1,4 +1,3 @@
-from main.domain.services.calculate_attainment_of_yearly_totals_service_impl import CalculateAttainmentOfYearlyTotalsServiceImpl
 from main.domain.services.calculate_c_model_service_impl import CalculateCModelServiceImpl
 from main.domain.services.calculate_mean_service_impl import CalculateMeanServiceImpl
 from main.domain.services.calculate_median_service_impl import CalculateMedianServiceImpl
@@ -44,17 +43,20 @@ class TargetDataServiceImpl(TargetDataService):
 
         merged_quarter_totals_with_listed_products_with_quarters = MergeDataServiceImpl.merge_quarter_totals_with_main_data_frame(merged_monthly_totals_with_listed_products_with_quarters,
                                                                                                                                   calculated_quarter_totals)
+
         attainment_quarter_totals_with_listed_products_with_quarters = self.attainment_table_strategy.execute_strategy(merged_quarter_totals_with_listed_products_with_quarters,
                                                                                                                        AttainmentTableType.QUARTER_TOTALS)
-        calculated_yearly_totals_for_each_product = self.attainment_table_strategy.execute_strategy(merged_quarter_totals_with_listed_products_with_quarters,
-                                                                                                    AttainmentTableType.YEARLY_TOTALS)
+
+        calculated_yearly_totals_for_each_product = CalculateYearlyTotalsForEachProductServiceImpl.calculate_yearly_totals_for_each_product(
+            merged_quarter_totals_with_listed_products_with_quarters)
 
         attainment_quarter_totals_merged_with_overall_data = MergeDataServiceImpl.merge_yearly_totals_with_attainment_of_quarter_totals(
             attainment_quarter_totals_with_listed_products_with_quarters,
             calculated_yearly_totals_for_each_product)
 
-        attainment_yearly_totals_with_listed_products_with_quarters = CalculateAttainmentOfYearlyTotalsServiceImpl.calculate_attainment_of_yearly_totals(
-            attainment_quarter_totals_merged_with_overall_data)
+        attainment_yearly_totals_with_listed_products_with_quarters = self.attainment_table_strategy.execute_strategy(attainment_quarter_totals_merged_with_overall_data,
+                                                                                                                      AttainmentTableType.YEARLY_TOTALS)
+
         median_calculation = CalculateMedianServiceImpl.calculate_median(attainment_yearly_totals_with_listed_products_with_quarters)
 
         last_year_totals_for_each_product = CalculateYearlyTotalsForEachProductServiceImpl.calculate_last_year_total_for_each_product(calculated_yearly_totals_for_each_product)
