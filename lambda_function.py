@@ -29,7 +29,7 @@ def get_s3_file_object(file_path):
         print('s3 read SUCCESS')
     except:
         print('Error => using Book2.csv')
-        df = pd.read_csv("Book2.csv", error_bad_lines=False)
+        df = pd.read_csv("resources/Book2.csv", error_bad_lines=False)
     return df
 
 

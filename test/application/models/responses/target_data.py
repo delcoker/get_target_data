@@ -2,7 +2,7 @@ import pandas as pd
 
 from main.application.models.responses.target_data import TargetData
 
-df_joined_data = pd.read_pickle('join_data_df.pkl')
+df_joined_data = pd.read_pickle('resources/join_data_df.pkl')
 
 print(df_joined_data)
 
