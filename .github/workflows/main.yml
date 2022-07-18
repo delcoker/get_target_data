@@ -1,10 +1,9 @@
 name: Deploy Lambda Function
 on:
   push:
-    branches: [ main]
+    branches: [ develop ]
   pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ develop ]
 
 jobs:
   release:
