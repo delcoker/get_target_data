@@ -15,6 +15,7 @@ from main.domain.services.interfaces.extract_unique_products_service import Uniq
 from main.domain.services.list_months_for_each_year_service_impl import ListMonthsForEachYearServiceImpl
 from main.domain.services.merge_data_service_impl import MergeDataServiceImpl
 from main.domain.target_data_service import TargetDataService
+from main.domain.services.interfaces.forecast_months_service import ForecastMonthsService
 
 
 # https://python-dependency-injector.ets-labs.org/introduction/di_in_python.html
@@ -22,11 +23,13 @@ class TargetDataServiceImpl(TargetDataService):
     def __init__(self, clean_data_service: DataEtlService,
                  unique_products_service: UniqueProductsService,
                  filter_data_service: ExtractDataService,
-                 attainment_table_strategy: AttainmentTableStrategyContextI):
+                 attainment_table_strategy: AttainmentTableStrategyContextI,
+                 forecast_months_service: ForecastMonthsService):
         self.clean_data_service = clean_data_service
         self.unique_products_service = unique_products_service
         self.filtered_data_service = filter_data_service
         self.attainment_table_strategy = attainment_table_strategy
+        self.forecast_months_service = forecast_months_service
 
     def get_target_data(self, fe_product_growth, dirty_data):
         cleaned_data = self.clean_data_service.standard_data_clean(dirty_data)
@@ -70,5 +73,7 @@ class TargetDataServiceImpl(TargetDataService):
 
         median_merged_with_calculated_growth_and_mean = MergeDataServiceImpl.merge_median_calculation_to_mean_calculation(calculated_attainment_table_one, mean_calculation)
         calculated_c_model = CalculateCModelServiceImpl.calculate_c_model(median_merged_with_calculated_growth_and_mean)
+
+        forcasted_months = self.forecast_months_service.list_months_for_forecasted_year(attainment_yearly_totals_with_listed_products_with_quarters)
 
         return calculated_c_model
