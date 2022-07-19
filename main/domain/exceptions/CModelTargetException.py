@@ -1,5 +1,5 @@
 class CModelTargetException(Exception):
-    """Exception raised for errors in the input salary.
+    """Exception raised for errors for C-Model.
 
         Attributes:
             message -- explanation of the error

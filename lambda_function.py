@@ -1,17 +1,20 @@
-import awswrangler as wr
 import pandas as pd
 
 import config
-
-
 # https://github.com/awslabs/aws-lambda-powertools-python/issues/924
-def lambda_handler(event, context, target_data_service=config.target_data_service):
+from main.domain.repositories.file_repository import FileRepository
+from main.domain.services.enums.file_type import FileType
+
+
+def lambda_handler(event, context,
+                   target_data_service=config.target_data_service,
+                   file_repository=config.file_repository):
     request_body = get_payload(event)
 
     file_path = get_file_path(request_body)
     fe_product_growth = get_product_input_configurations(request_body)
 
-    df = get_s3_file_object(file_path)
+    df = get_s3_file_object(file_path, file_repository)
 
     target_data_df = target_data_service.get_target_data(fe_product_growth, df)
     print(target_data_df.columns)
@@ -23,9 +26,9 @@ def lambda_handler(event, context, target_data_service=config.target_data_servic
     }
 
 
-def get_s3_file_object(file_path):
+def get_s3_file_object(file_path: str, file_repository: FileRepository):
     try:
-        df = wr.s3.read_csv(file_path, error_bad_lines=False)
+        df = file_repository.find(file_path, FileType.CSV)
         print('s3 read SUCCESS')
     except:
         print('Error => using Book2.csv')
