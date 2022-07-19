@@ -1,3 +1,5 @@
+from pandas import DataFrame
+
 from main.domain.services.calculate_c_model_service_impl import CalculateCModelServiceImpl
 from main.domain.services.calculate_mean_service_impl import CalculateMeanServiceImpl
 from main.domain.services.calculate_median_service_impl import CalculateMedianServiceImpl
@@ -28,7 +30,7 @@ class TargetDataServiceImpl(TargetDataService):
         self.filtered_data_service = filter_data_service
         self.attainment_table_strategy = attainment_table_strategy
 
-    def get_target_data(self, fe_product_growth, dirty_data):
+    def get_target_data(self, fe_product_growth, dirty_data) -> DataFrame:
         cleaned_data = self.clean_data_service.standard_data_clean(dirty_data)
         all_products = self.unique_products_service.get_unique_products(cleaned_data)
         filtered_data = self.filtered_data_service.extract_data_based_on_number_of_years(cleaned_data)
