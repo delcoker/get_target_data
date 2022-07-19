@@ -74,6 +74,8 @@ class TargetDataServiceImpl(TargetDataService):
         median_merged_with_calculated_growth_and_mean = MergeDataServiceImpl.merge_median_calculation_to_mean_calculation(calculated_attainment_table_one, mean_calculation)
         calculated_c_model = CalculateCModelServiceImpl.calculate_c_model(median_merged_with_calculated_growth_and_mean)
 
-        forcasted_months = self.forecast_months_service.list_months_for_forecasted_year(attainment_yearly_totals_with_listed_products_with_quarters)
+        forecasted_months = self.forecast_months_service.list_months_for_forecasted_year(attainment_yearly_totals_with_listed_products_with_quarters)
 
-        return calculated_c_model
+        final_merged_data = MergeDataServiceImpl.merge_forecasted_months_with_main_dataframe(forecasted_months, calculated_c_model)
+        print(final_merged_data)
+        return final_merged_data

@@ -42,3 +42,7 @@ class MergeDataServiceImpl(MergeDataService):
         merged_median_and_mean = pd.merge(median_calculation, mean_calculation, how="left")
         merged_median_and_mean['Month_Name'] = merged_median_and_mean['Month'].apply(lambda x: calendar.month_abbr[x])
         return merged_median_and_mean
+
+    def merge_forecasted_months_with_main_dataframe(forecast_months, dataset):
+        merged_data = pd.merge(forecast_months[['Month', 'Year']], dataset, on='Month', how='left')
+        return merged_data
