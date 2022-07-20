@@ -24,5 +24,9 @@ class MergeDataService:
         pass
 
     def merge_forecasted_months_with_main_dataframe(self, forecast_months, dataset) -> dict:
-        """Merge forecasted months with main dataframe from the currently loaded file."""
+        """Merge forecasted months with main dataframe from the currently loaded files."""
+        pass
+
+    def append_previous_years_with_forecasted_data(self, previous_years, forecasted_data) -> dict:
+        """Append previous years data with main dataframe from the currently loaded files."""
         pass
