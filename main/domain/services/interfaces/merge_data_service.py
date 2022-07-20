@@ -22,3 +22,7 @@ class MergeDataService:
     def merge_median_calculation_to_mean_calculation(self, median_growth_calculation, mean_calculation) -> dict:
         """Merge median calculation for forecasted months with calculated product growth from the currently loaded file."""
         pass
+
+    def merge_forecasted_months_with_main_dataframe(self, forecast_months, dataset) -> dict:
+        """Merge forecasted months with main dataframe from the currently loaded file."""
+        pass
