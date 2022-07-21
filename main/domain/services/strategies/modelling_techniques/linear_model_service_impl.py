@@ -1,0 +1,24 @@
+from main.domain.services.calculate_c_model_service_impl import CalculateCModelServiceImpl
+from main.domain.services.calculate_mean_service_impl import CalculateMeanServiceImpl
+from main.domain.services.calculate_median_service_impl import CalculateMedianServiceImpl
+from main.domain.services.calculate_percentage_growth_service_impl import CalculatePercentageGrowthServiceImpl
+from main.domain.services.calculate_quarter_totals_service_impl import CalculateQuarterTotalsServiceImpl
+from main.domain.services.calculate_yearly_totals_for_each_product_service_impl import CalculateYearlyTotalsForEachProductServiceImpl
+from main.domain.services.contexts.attainment_table_strategy_context_i import AttainmentTableStrategyContextI
+from main.domain.services.create_new_column_in_data_frame_service_impl import CreateNewColumnInDataFrameServiceImpl
+from main.domain.services.enums.attainment_table_type import AttainmentTableType
+from main.domain.services.extract_closed_won_data_service_impl import ExtractClosedWonDataService
+from main.domain.services.get_monthly_revenue_for_products_service_impl import GetMonthlyRevenueForProductsService
+from main.domain.services.interfaces.forecast_months_service import ForecastMonthsService
+from main.domain.services.interfaces.modelling_technique_strategy_service import ModellingTechniqueStrategyService
+from main.domain.services.list_months_for_each_year_service_impl import ListMonthsForEachYearServiceImpl
+from main.domain.services.merge_data_service_impl import MergeDataServiceImpl
+
+
+class LinearModelServiceImpl(ModellingTechniqueStrategyService):
+
+    def __init__(self, forecast_months_service: ForecastMonthsService):
+        self.forecast_months_service = forecast_months_service
+
+    def evaluate_model(self, filtered_data, all_products, fe_product_growth):
+        return {'linear': 'linear'}
