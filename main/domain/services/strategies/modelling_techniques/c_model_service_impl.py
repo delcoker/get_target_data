@@ -67,5 +67,7 @@ class CModelServiceImpl(ModellingTechniqueStrategyService):
         forecasted_months = self.forecast_months_service.list_months_for_forecasted_year(attainment_yearly_totals_with_listed_products_with_quarters)
 
         c_cmodel_final_merged_data = MergeDataServiceImpl.merge_forecasted_months_with_main_dataframe(forecasted_months, calculated_c_model)
+        append_previous_years_to_final_merged_data = MergeDataServiceImpl.append_previous_years_with_forecasted_data(merged_monthly_totals_with_listed_products_with_quarters,c_cmodel_final_merged_data)
+        add_month_name_to_final_merged_data = CreateNewColumnInDataFrameServiceImpl.create_month_name_column(append_previous_years_to_final_merged_data)
 
-        return c_cmodel_final_merged_data
+        return add_month_name_to_final_merged_data

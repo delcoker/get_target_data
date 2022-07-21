@@ -26,6 +26,7 @@ class TargetDataServiceImpl(TargetDataService):
         filtered_data = self.filtered_data_service.extract_data_based_on_number_of_years(cleaned_data)
         # print(filtered_data)
         c_cmodel_data = self.modelling_technique_strategy.execute_strategy(ModelType.CMODEL, filtered_data, all_products, fe_product_growth)
+        linear_model_data = self.modelling_technique_strategy.execute_strategy(ModelType.LINEAR, filtered_data, all_products, fe_product_growth)
 
         # print(c_cmodel_data)
         return c_cmodel_data

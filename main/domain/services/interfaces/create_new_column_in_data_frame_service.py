@@ -6,3 +6,11 @@ class CreateNewColumnInDataFrameService:
     def create_month_name_column(self, full_file_name: str) -> dict:
         """Add new column to the currently loaded file."""
         pass
+
+    def create_close_month_column(self, full_file_name: str) -> dict:
+        """Add new column to the currently loaded file."""
+        pass
+
+    def create_time_column(self, full_file_name: str) -> dict:
+        """Add new column to the currently loaded file."""
+        pass
