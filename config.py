@@ -1,21 +1,19 @@
 from main.domain.services.clean_data_service_impl import CleanDataServiceImpl
 from main.domain.services.contexts.attainment_table_strategy_context import AttainmentTableStrategyContext
 from main.domain.services.contexts.modelling_technique_context import ModellingTechniqueContext
-from main.domain.services.extract_data_based_on_number_of_years_service_impl import ExtractDataBasedOnNumberOfYearsServiceImpl
+from main.domain.services.cmodel.filter_data_by_year_service_impl import FilterDataByYearServiceImpl
 from main.domain.services.extract_unique_products_service_impl import ExtractUniqueProductsServiceImpl
 from main.domain.services.strategies.modelling_techniques.c_model_service_impl import CModelServiceImpl
 from main.domain.target_data_service_impl import TargetDataServiceImpl
 from main.domain.services.forecast_months_service_impl import ForecastMonthsServiceImpl
-
-# https://realpython.com/python-interface/
-# https: // python - dependency - injector.ets - labs.org / introduction / di_in_python.html
 from main.infrastructure.repositories.file_repository_impl import FileRepositoryImpl
 
 clean_data_service = CleanDataServiceImpl()
 unique_products_service = ExtractUniqueProductsServiceImpl()
-filter_data_service = ExtractDataBasedOnNumberOfYearsServiceImpl()
+filter_data_service = FilterDataByYearServiceImpl()
 attainment_table_strategy = AttainmentTableStrategyContext()
 forecast_months_service = ForecastMonthsServiceImpl()
+
 c_model_service = CModelServiceImpl(attainment_table_strategy=attainment_table_strategy,
                                     forecast_months_service=forecast_months_service)
 

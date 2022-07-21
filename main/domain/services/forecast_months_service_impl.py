@@ -3,6 +3,7 @@ import datetime as dt
 from dateutil.relativedelta import relativedelta
 import pandas as pd
 
+
 class ForecastMonthsServiceImpl(ForecastMonthsService):
     def __init__(self):
         pass

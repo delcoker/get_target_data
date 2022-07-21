@@ -1,4 +1,4 @@
-from .interfaces.calculate_percentage_growth_service import CalculatePercentageGrowthService
+from main.domain.services.interfaces.calculate_percentage_growth_service import CalculatePercentageGrowthService
 import pandas as pd
 
 

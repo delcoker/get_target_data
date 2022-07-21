@@ -1,4 +1,4 @@
-from .interfaces.calculate_c_model_service import CalculateCModelService
+from main.domain.services.interfaces.calculate_c_model_service import CalculateCModelService
 
 
 class CalculateCModelServiceImpl(CalculateCModelService):

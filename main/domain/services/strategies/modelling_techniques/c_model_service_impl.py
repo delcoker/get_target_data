@@ -1,17 +1,17 @@
-from main.domain.services.calculate_c_model_service_impl import CalculateCModelServiceImpl
+from main.domain.services.cmodel.calculate_c_model_service_impl import CalculateCModelServiceImpl
 from main.domain.services.calculate_mean_service_impl import CalculateMeanServiceImpl
 from main.domain.services.calculate_median_service_impl import CalculateMedianServiceImpl
-from main.domain.services.calculate_percentage_growth_service_impl import CalculatePercentageGrowthServiceImpl
-from main.domain.services.calculate_quarter_totals_service_impl import CalculateQuarterTotalsServiceImpl
-from main.domain.services.calculate_yearly_totals_for_each_product_service_impl import CalculateYearlyTotalsForEachProductServiceImpl
+from main.domain.services.cmodel.calculate_percentage_growth_service_impl import CalculatePercentageGrowthServiceImpl
+from main.domain.services.cmodel.calculate_quarter_totals_service_impl import CalculateQuarterTotalsServiceImpl
+from main.domain.services.cmodel.calculate_yearly_totals_for_each_product_service_impl import CalculateYearlyTotalsForEachProductServiceImpl
 from main.domain.services.contexts.attainment_table_strategy_context_i import AttainmentTableStrategyContextI
-from main.domain.services.create_new_column_in_data_frame_service_impl import CreateNewColumnInDataFrameServiceImpl
+from main.domain.services.cmodel.create_new_column_in_data_frame_service_impl import CreateNewColumnInDataFrameServiceImpl
 from main.domain.services.enums.attainment_table_type import AttainmentTableType
-from main.domain.services.extract_closed_won_data_service_impl import ExtractClosedWonDataService
-from main.domain.services.get_monthly_revenue_for_products_service_impl import GetMonthlyRevenueForProductsService
+from main.domain.services.cmodel.extract_closed_won_data_service_impl import FilterClosedWonDataService
+from main.domain.services.cmodel.get_monthly_revenue_for_products_service_impl import GetMonthlyRevenueForProductsService
 from main.domain.services.interfaces.forecast_months_service import ForecastMonthsService
 from main.domain.services.interfaces.modelling_technique_strategy_service import ModellingTechniqueStrategyService
-from main.domain.services.list_months_for_each_year_service_impl import ListMonthsForEachYearServiceImpl
+from main.domain.services.cmodel.list_months_for_each_year_service_impl import ListMonthsForEachYearServiceImpl
 from main.domain.services.merge_data_service_impl import MergeDataServiceImpl
 
 
@@ -25,7 +25,7 @@ class CModelServiceImpl(ModellingTechniqueStrategyService):
     def evaluate_model(self, filtered_data, all_products, fe_product_growth):
         # filtered data
 
-        closed_won_filtered_data = ExtractClosedWonDataService.extract_closed_won_data(filtered_data)
+        closed_won_filtered_data = FilterClosedWonDataService.extract_closed_won_data(filtered_data)
         listed_months_for_each_year = ListMonthsForEachYearServiceImpl.list_months_for_each_year(filtered_data)
         listed_products_for_each_month_for_each_year = MergeDataServiceImpl.merge_products_with_each_month_for_each_year(listed_months_for_each_year, all_products)
         monthly_totals_for_products = GetMonthlyRevenueForProductsService.get_monthly_revenue_for_products(closed_won_filtered_data)

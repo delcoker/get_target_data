@@ -1,4 +1,4 @@
-from .interfaces.product_monthly_revenue_service import ProductMonthlyRevenueService
+from main.domain.services.interfaces.product_monthly_revenue_service import ProductMonthlyRevenueService
 
 class GetMonthlyRevenueForProductsService(ProductMonthlyRevenueService):
     def get_monthly_revenue_for_products(dataset):

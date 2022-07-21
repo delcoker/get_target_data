@@ -1,14 +1,14 @@
-from .interfaces.data_conversion_service import DataConversionService
+from main.domain.services.interfaces.data_conversion_service import DataConversionService
 import datetime as dt
 
 
 class DataConversionServiceImpl(DataConversionService):
-    def convert_month_name_to_number(month_name) -> dict:
+    def convert_month_name_to_number(month_name) -> int:
         datetime_object = dt.datetime.strptime(month_name, "%B")
         month_number = datetime_object.month
         return month_number
 
-    def convert_month_number_to_name(month_number) -> dict:
+    def convert_month_number_to_name(month_number) -> str:
         if month_number == 0:
             month_number = 12
         datetime_object = dt.datetime.strptime(str(month_number), "%m")

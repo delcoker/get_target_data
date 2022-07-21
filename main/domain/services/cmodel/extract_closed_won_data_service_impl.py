@@ -1,6 +1,6 @@
-from .interfaces.extract_data_service import ExtractDataService
+from main.domain.services.interfaces.extract_data_service import FilterDataService
 
-class ExtractClosedWonDataService(ExtractDataService):
+class FilterClosedWonDataService(FilterDataService):
     def extract_closed_won_data(dataset):
         copy_of_dataset = dataset.copy()
         copy_of_dataset = dataset[copy_of_dataset['Stage']=='Closed Won']

@@ -15,9 +15,9 @@ class FileRepositoryImpl(FileRepository):
 
     def find(self, file_path: str, file_type: FileType):
         if file_type == FileType.CSV:
-            return wr.s3.read_csv(file_path, error_bad_lines=False)
+            return wr.s3.read_csv(file_path, on_bad_lines="error")
         if file_type == FileType.EXCEL:
-            return wr.s3.read_excel(file_path, error_bad_lines=False)
+            return wr.s3.read_excel(file_path, on_bad_lines="error")
         raise FileTypeUnsupportedException(message="File type is unsupported!!")
 
     def update(self, file_path):

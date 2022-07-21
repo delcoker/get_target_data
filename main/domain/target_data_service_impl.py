@@ -3,9 +3,8 @@ from pandas import DataFrame
 from main.domain.services.contexts.modelling_technique_context_i import ModellingTechniqueContextI
 from main.domain.services.enums.model_type import ModelType
 from main.domain.services.interfaces.data_etl_service import DataEtlService
-from main.domain.services.interfaces.extract_data_service import ExtractDataService
+from main.domain.services.interfaces.extract_data_service import FilterDataService
 from main.domain.services.interfaces.extract_unique_products_service import UniqueProductsService
-from main.domain.services.strategies.modelling_techniques.c_model_service_impl import CModelServiceImpl
 from main.domain.target_data_service import TargetDataService
 
 
@@ -13,7 +12,7 @@ from main.domain.target_data_service import TargetDataService
 class TargetDataServiceImpl(TargetDataService):
     def __init__(self, clean_data_service: DataEtlService,
                  unique_products_service: UniqueProductsService,
-                 filter_data_service: ExtractDataService,
+                 filter_data_service: FilterDataService,
                  modelling_technique_strategy: ModellingTechniqueContextI):
         self.clean_data_service = clean_data_service
         self.unique_products_service = unique_products_service

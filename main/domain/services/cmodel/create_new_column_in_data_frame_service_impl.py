@@ -1,4 +1,4 @@
-from .interfaces.create_new_column_in_data_frame_service import CreateNewColumnInDataFrameService
+from main.domain.services.interfaces.create_new_column_in_data_frame_service import CreateNewColumnInDataFrameService
 from main.domain.services.data_conversion_service_impl import DataConversionServiceImpl
 import pandas as pd
 

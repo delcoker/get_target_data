@@ -1,4 +1,4 @@
-from .interfaces.calculate_yearly_totals_for_each_product_service import CalculateYearlyTotalsForEachProductService
+from main.domain.services.interfaces.calculate_yearly_totals_for_each_product_service import CalculateYearlyTotalsForEachProductService
 
 
 class CalculateYearlyTotalsForEachProductServiceImpl(CalculateYearlyTotalsForEachProductService):

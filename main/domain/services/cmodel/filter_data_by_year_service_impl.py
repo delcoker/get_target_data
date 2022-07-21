@@ -1,9 +1,9 @@
-from main.domain.services.interfaces.extract_data_service import ExtractDataService
+from main.domain.services.interfaces.extract_data_service import FilterDataService
 
 import datetime as dt
 
 
-class ExtractDataBasedOnNumberOfYearsServiceImpl(ExtractDataService):
+class FilterDataByYearServiceImpl(FilterDataService):
     def __init__(self):
         pass
 

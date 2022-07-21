@@ -1,4 +1,4 @@
-from .interfaces.calculate_quarter_totals_service import CalculateQuarterTotalsService
+from main.domain.services.interfaces.calculate_quarter_totals_service import CalculateQuarterTotalsService
 
 
 class CalculateQuarterTotalsServiceImpl(CalculateQuarterTotalsService):

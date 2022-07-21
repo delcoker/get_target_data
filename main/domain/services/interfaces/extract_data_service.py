@@ -1,4 +1,4 @@
-class ExtractDataService:
+class FilterDataService:
     def extract_data_based_on_number_of_years(self, dataset):
         """Extract data for a number of years from the currently loaded file."""
         pass

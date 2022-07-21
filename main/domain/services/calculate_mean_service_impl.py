@@ -1,4 +1,4 @@
-from .interfaces.calculate_mean_service import CalculateMeanService
+from main.domain.services.interfaces.calculate_mean_service import CalculateMeanService
 
 
 class CalculateMeanServiceImpl(CalculateMeanService):

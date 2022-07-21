@@ -1,4 +1,4 @@
-from .interfaces.list_months_for_each_year_service import ListMonthsForEachYearService
+from main.domain.services.interfaces.list_months_for_each_year_service import ListMonthsForEachYearService
 from dateutil.relativedelta import relativedelta
 import pandas as pd
 
