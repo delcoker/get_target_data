@@ -7,6 +7,7 @@ from main.domain.services.interfaces.extract_data_service import FilterDataServi
 from main.domain.services.interfaces.extract_unique_products_service import UniqueProductsService
 from main.domain.target_data_service import TargetDataService
 from main.domain.target_data_service import TargetDataService
+import pandas as pd
 
 
 # https://python-dependency-injector.ets-labs.org/introduction/di_in_python.html

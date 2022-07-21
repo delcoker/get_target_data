@@ -25,7 +25,6 @@ class LinearModelServiceImpl(ModellingTechniqueStrategyService):
         merged_monthly_totals_with_listed_products = ResolutionServiceImpl.anomaly_resolution(
             merged_monthly_totals_with_listed_products)
         add_close_month_column = CreateNewColumnInDataFrameServiceImpl.create_close_month_column(merged_monthly_totals_with_listed_products)
-        # add_time_column = CreateNewColumnInDataFrameServiceImpl.create_time_column(add_close_month_column)
         linear_data_for_each_product = LinearModelCalculationServiceImpl.implement_linear_model_calculation(add_close_month_column, all_products)
         # print(linear_data_for_each_product)
         return linear_data_for_each_product
