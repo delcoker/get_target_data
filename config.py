@@ -1,5 +1,6 @@
 from main.domain.services.clean_data_service_impl import CleanDataServiceImpl
 from main.domain.services.contexts.attainment_table_strategy_context import AttainmentTableStrategyContext
+from main.domain.services.contexts.modelling_technique_context import ModellingTechniqueContext
 from main.domain.services.extract_data_based_on_number_of_years_service_impl import ExtractDataBasedOnNumberOfYearsServiceImpl
 from main.domain.services.extract_unique_products_service_impl import ExtractUniqueProductsServiceImpl
 from main.domain.services.strategies.modelling_techniques.c_model_service_impl import CModelServiceImpl
@@ -18,9 +19,12 @@ forecast_months_service = ForecastMonthsServiceImpl()
 c_model_service = CModelServiceImpl(attainment_table_strategy=attainment_table_strategy,
                                     forecast_months_service=forecast_months_service)
 
+modelling_technique_strategy = ModellingTechniqueContext(attainment_table_strategy=attainment_table_strategy,
+                                                         forecast_months_service=forecast_months_service)
+
 target_data_service = TargetDataServiceImpl(clean_data_service=clean_data_service,
                                             unique_products_service=unique_products_service,
                                             filter_data_service=filter_data_service,
-                                            c_model_service=c_model_service)
+                                            modelling_technique_strategy=modelling_technique_strategy)
 
 file_repository = FileRepositoryImpl()

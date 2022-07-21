@@ -1,4 +1,5 @@
-from .interfaces.extract_data_service import ExtractDataService
+from main.domain.services.interfaces.extract_data_service import ExtractDataService
+
 import datetime as dt
 
 
