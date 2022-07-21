@@ -46,3 +46,8 @@ class MergeDataServiceImpl(MergeDataService):
     def merge_forecasted_months_with_main_dataframe(forecast_months, dataset):
         merged_data = pd.merge(forecast_months[['Month', 'Year']], dataset, on='Month', how='left')
         return merged_data
+
+    def append_previous_years_with_forecasted_data(previous_years, forecasted_data):
+        complete_data = forecasted_data.append(
+            previous_years[['Month', 'ARR', 'Product Name', 'Year', 'Quarter']]).reset_index(drop=True)
+        return complete_data

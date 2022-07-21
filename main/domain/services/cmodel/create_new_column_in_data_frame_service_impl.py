@@ -1,7 +1,7 @@
 from main.domain.services.interfaces.create_new_column_in_data_frame_service import CreateNewColumnInDataFrameService
 from main.domain.services.data_conversion_service_impl import DataConversionServiceImpl
 import pandas as pd
-
+import calendar
 
 class CreateNewColumnInDataFrameServiceImpl(CreateNewColumnInDataFrameService):
     def create_quarter_column_in_dataset(dataset):
@@ -12,4 +12,9 @@ class CreateNewColumnInDataFrameServiceImpl(CreateNewColumnInDataFrameService):
         freq = 'Q-' + fiscal_end_year.upper()
 
         copy_of_dataset['Quarter'] = pd.PeriodIndex(copy_of_dataset['Date'], freq=freq).strftime('Q%q')
+        return copy_of_dataset
+
+    def create_month_name_column(dataset):
+        copy_of_dataset = dataset.copy()
+        copy_of_dataset['Month_Name'] = copy_of_dataset['Month'].apply(lambda x: calendar.month_abbr[x])
         return copy_of_dataset
