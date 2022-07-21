@@ -13,6 +13,7 @@ from main.domain.services.interfaces.forecast_months_service import ForecastMont
 from main.domain.services.interfaces.modelling_technique_strategy_service import ModellingTechniqueStrategyService
 from main.domain.services.list_months_for_each_year_service_impl import ListMonthsForEachYearServiceImpl
 from main.domain.services.merge_data_service_impl import MergeDataServiceImpl
+from main.domain.services.resolution_service_impl import ResolutionServiceImpl
 
 
 class CModelServiceImpl(ModellingTechniqueStrategyService):
@@ -30,9 +31,9 @@ class CModelServiceImpl(ModellingTechniqueStrategyService):
         listed_products_for_each_month_for_each_year = MergeDataServiceImpl.merge_products_with_each_month_for_each_year(listed_months_for_each_year, all_products)
         monthly_totals_for_products = GetMonthlyRevenueForProductsService.get_monthly_revenue_for_products(closed_won_filtered_data)
         merged_monthly_totals_with_listed_products = MergeDataServiceImpl.merge_monthly_totals_with_listed_products(listed_products_for_each_month_for_each_year, monthly_totals_for_products)
+        merged_monthly_totals_with_listed_products = ResolutionServiceImpl.anomaly_resolution(merged_monthly_totals_with_listed_products)
         merged_monthly_totals_with_listed_products_with_quarters = CreateNewColumnInDataFrameServiceImpl.create_quarter_column_in_dataset(merged_monthly_totals_with_listed_products)
         calculated_quarter_totals = CalculateQuarterTotalsServiceImpl.calculate_quarter_totals(merged_monthly_totals_with_listed_products_with_quarters)
-
         merged_quarter_totals_with_listed_products_with_quarters = MergeDataServiceImpl.merge_quarter_totals_with_main_data_frame(merged_monthly_totals_with_listed_products_with_quarters,
                                                                                                                                   calculated_quarter_totals)
 

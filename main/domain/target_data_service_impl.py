@@ -7,6 +7,7 @@ from main.domain.services.interfaces.extract_data_service import ExtractDataServ
 from main.domain.services.interfaces.extract_unique_products_service import UniqueProductsService
 from main.domain.services.strategies.modelling_techniques.c_model_service_impl import CModelServiceImpl
 from main.domain.target_data_service import TargetDataService
+from main.domain.target_data_service import TargetDataService
 
 
 # https://python-dependency-injector.ets-labs.org/introduction/di_in_python.html
@@ -24,7 +25,7 @@ class TargetDataServiceImpl(TargetDataService):
         cleaned_data = self.clean_data_service.standard_data_clean(dirty_data)
         all_products = self.unique_products_service.get_unique_products(cleaned_data)
         filtered_data = self.filtered_data_service.extract_data_based_on_number_of_years(cleaned_data)
-
+        # print(filtered_data)
         c_cmodel_data = self.modelling_technique_strategy.execute_strategy(ModelType.CMODEL, filtered_data, all_products, fe_product_growth)
 
         # print(c_cmodel_data)
