@@ -1,10 +1,11 @@
-from main.domain.services.interfaces.linear_model_calculation_service import LinearModelCalculationService
+import numpy as np
+import pandas as pd
+from sklearn import linear_model
+
 from main.domain.services.cmodel.create_new_column_in_data_frame_service_impl import CreateNewColumnInDataFrameServiceImpl
 from main.domain.services.forecast_months_service_impl import ForecastMonthsServiceImpl
-import numpy as np
-from sklearn import linear_model
-from sklearn.linear_model import LinearRegression
-import pandas as pd
+from main.domain.services.interfaces.linear_model_calculation_service import LinearModelCalculationService
+
 
 class LinearModelCalculationServiceImpl(LinearModelCalculationService):
     def implement_linear_model_calculation(dataset, all_products):
@@ -30,5 +31,3 @@ class LinearModelCalculationServiceImpl(LinearModelCalculationService):
         product_linear_data['linear_model'].round(decimals=2)
         product_linear_data = product_linear_data.reset_index(drop=True)
         return product_linear_data
-
-

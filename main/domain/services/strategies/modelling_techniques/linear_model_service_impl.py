@@ -8,6 +8,7 @@ from main.domain.services.resolution_service_impl import ResolutionServiceImpl
 from main.domain.services.cmodel.create_new_column_in_data_frame_service_impl import CreateNewColumnInDataFrameServiceImpl
 from main.domain.services.linear.linear_model_calculation_service_impl import LinearModelCalculationServiceImpl
 
+
 class LinearModelServiceImpl(ModellingTechniqueStrategyService):
 
     def __init__(self, forecast_months_service: ForecastMonthsService):
