@@ -4,7 +4,10 @@ import pandas as pd
 
 
 class ListMonthsForEachYearServiceImpl(ListMonthsForEachYearService):
-    def list_months_for_each_year(dataset):
+    def __init__(self):
+        pass
+
+    def list_months_for_each_year(self, dataset):
         copy_of_dataset = dataset.copy()
         copy_of_dataset['Close Month'] = copy_of_dataset['Close Date'].dt.strftime('%m-%Y')
         copy_of_dataset = copy_of_dataset.sort_values(['Close Month'])

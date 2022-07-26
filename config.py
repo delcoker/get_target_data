@@ -1,4 +1,5 @@
 from main.domain.services.clean_data_service_impl import CleanDataServiceImpl
+from main.domain.services.cmodel.extract_closed_won_data_service_impl import FilterClosedWonDataServiceImpl
 from main.domain.services.contexts.attainment_table_strategy_context import AttainmentTableStrategyContext
 from main.domain.services.contexts.modelling_technique_context import ModellingTechniqueContext
 from main.domain.services.cmodel.filter_data_by_year_service_impl import FilterDataByYearServiceImpl
@@ -13,12 +14,15 @@ unique_products_service = ExtractUniqueProductsServiceImpl()
 filter_data_service = FilterDataByYearServiceImpl()
 attainment_table_strategy = AttainmentTableStrategyContext()
 forecast_months_service = ForecastMonthsServiceImpl()
+filter_closed_won_service = FilterClosedWonDataServiceImpl()
 
 c_model_service = CModelServiceImpl(attainment_table_strategy=attainment_table_strategy,
-                                    forecast_months_service=forecast_months_service)
+                                    forecast_months_service=forecast_months_service,
+                                    filter_closed_won_service=filter_closed_won_service)
 
 modelling_technique_strategy = ModellingTechniqueContext(attainment_table_strategy=attainment_table_strategy,
-                                                         forecast_months_service=forecast_months_service)
+                                                         forecast_months_service=forecast_months_service,
+                                                         filter_closed_won_service=filter_closed_won_service)
 
 target_data_service = TargetDataServiceImpl(clean_data_service=clean_data_service,
                                             unique_products_service=unique_products_service,

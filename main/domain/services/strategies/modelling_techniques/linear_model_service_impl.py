@@ -1,6 +1,7 @@
+from main.domain.services.interfaces.extract_data_service import FilterDataService
 from main.domain.services.interfaces.forecast_months_service import ForecastMonthsService
 from main.domain.services.interfaces.modelling_technique_strategy_service import ModellingTechniqueStrategyService
-from main.domain.services.cmodel.extract_closed_won_data_service_impl import FilterClosedWonDataService
+from main.domain.services.cmodel.extract_closed_won_data_service_impl import FilterClosedWonDataServiceImpl
 from main.domain.services.cmodel.list_months_for_each_year_service_impl import ListMonthsForEachYearServiceImpl
 from main.domain.services.merge_data_service_impl import MergeDataServiceImpl
 from main.domain.services.cmodel.get_monthly_revenue_for_products_service_impl import GetMonthlyRevenueForProductsService
@@ -11,12 +12,18 @@ from main.domain.services.linear.linear_model_calculation_service_impl import Li
 
 class LinearModelServiceImpl(ModellingTechniqueStrategyService):
 
-    def __init__(self, forecast_months_service: ForecastMonthsService):
+    def __init__(self, forecast_months_service: ForecastMonthsService,
+                 filter_closed_won_service: FilterDataService):
         self.forecast_months_service = forecast_months_service
+        self.filter_closed_won_service = filter_closed_won_service
 
     def evaluate_model(self, filtered_data, all_products, fe_product_growth):
-        closed_won_filtered_data = FilterClosedWonDataService.extract_closed_won_data(filtered_data)
-        listed_months_for_each_year = ListMonthsForEachYearServiceImpl.list_months_for_each_year(filtered_data)
+        # filter_closed_won_service = FilterClosedWonDataServiceImpl()
+        closed_won_filtered_data = self.filter_closed_won_service.extract_closed_won_data(filtered_data)
+
+        list_months_for_each_year_service = ListMonthsForEachYearServiceImpl()
+        listed_months_for_each_year = list_months_for_each_year_service.list_months_for_each_year(filtered_data)
+
         listed_products_for_each_month_for_each_year = MergeDataServiceImpl.merge_products_with_each_month_for_each_year(
             listed_months_for_each_year, all_products)
         monthly_totals_for_products = GetMonthlyRevenueForProductsService.get_monthly_revenue_for_products(

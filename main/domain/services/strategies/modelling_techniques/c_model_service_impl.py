@@ -7,8 +7,9 @@ from main.domain.services.cmodel.calculate_yearly_totals_for_each_product_servic
 from main.domain.services.contexts.attainment_table_strategy_context_i import AttainmentTableStrategyContextI
 from main.domain.services.cmodel.create_new_column_in_data_frame_service_impl import CreateNewColumnInDataFrameServiceImpl
 from main.domain.services.enums.attainment_table_type import AttainmentTableType
-from main.domain.services.cmodel.extract_closed_won_data_service_impl import FilterClosedWonDataService
+from main.domain.services.cmodel.extract_closed_won_data_service_impl import FilterClosedWonDataServiceImpl
 from main.domain.services.cmodel.get_monthly_revenue_for_products_service_impl import GetMonthlyRevenueForProductsService
+from main.domain.services.interfaces.extract_data_service import FilterDataService
 from main.domain.services.interfaces.forecast_months_service import ForecastMonthsService
 from main.domain.services.interfaces.modelling_technique_strategy_service import ModellingTechniqueStrategyService
 from main.domain.services.cmodel.list_months_for_each_year_service_impl import ListMonthsForEachYearServiceImpl
@@ -19,15 +20,19 @@ from main.domain.services.resolution_service_impl import ResolutionServiceImpl
 class CModelServiceImpl(ModellingTechniqueStrategyService):
 
     def __init__(self, attainment_table_strategy: AttainmentTableStrategyContextI,
-                 forecast_months_service: ForecastMonthsService):
+                 forecast_months_service: ForecastMonthsService,
+                 filter_closed_won_service: FilterDataService):
         self.forecast_months_service = forecast_months_service
         self.attainment_table_strategy = attainment_table_strategy
+        self.filter_closed_won_service = filter_closed_won_service
 
     def evaluate_model(self, filtered_data, all_products, fe_product_growth):
         # filtered data
+        closed_won_filtered_data = self.filter_closed_won_service.extract_closed_won_data(filtered_data)
 
-        closed_won_filtered_data = FilterClosedWonDataService.extract_closed_won_data(filtered_data)
-        listed_months_for_each_year = ListMonthsForEachYearServiceImpl.list_months_for_each_year(filtered_data)
+        list_months_for_each_year_service = ListMonthsForEachYearServiceImpl()
+        listed_months_for_each_year = list_months_for_each_year_service.list_months_for_each_year(filtered_data)
+
         listed_products_for_each_month_for_each_year = MergeDataServiceImpl.merge_products_with_each_month_for_each_year(listed_months_for_each_year, all_products)
         monthly_totals_for_products = GetMonthlyRevenueForProductsService.get_monthly_revenue_for_products(closed_won_filtered_data)
         merged_monthly_totals_with_listed_products = MergeDataServiceImpl.merge_monthly_totals_with_listed_products(listed_products_for_each_month_for_each_year, monthly_totals_for_products)

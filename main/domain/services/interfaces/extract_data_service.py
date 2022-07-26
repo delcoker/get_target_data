@@ -3,6 +3,6 @@ class FilterDataService:
         """Extract data for a number of years from the currently loaded file."""
         pass
     
-    # def extract_closed_won_dat(self, full_file_name: str) -> dict:
-    #     """Extract data which are closed won from the currently loaded file."""
-    #     pass
+    def extract_closed_won_data(self, dataset):
+        """Extract data which are closed won from the currently loaded file."""
+        pass
