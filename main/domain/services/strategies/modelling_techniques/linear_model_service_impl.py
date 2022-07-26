@@ -29,4 +29,3 @@ class LinearModelServiceImpl(ModellingTechniqueStrategyService):
         linear_data_for_each_product = LinearModelCalculationServiceImpl.implement_linear_model_calculation(add_close_month_column, all_products)
         # print(linear_data_for_each_product)
         return linear_data_for_each_product
-        # return {'linear': 'linear'}

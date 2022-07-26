@@ -1,3 +1,4 @@
+import urllib3
 from pandas import DataFrame
 
 from main.domain.services.contexts.modelling_technique_context_i import ModellingTechniqueContextI
@@ -6,11 +7,8 @@ from main.domain.services.interfaces.data_etl_service import DataEtlService
 from main.domain.services.interfaces.extract_data_service import FilterDataService
 from main.domain.services.interfaces.extract_unique_products_service import UniqueProductsService
 from main.domain.target_data_service import TargetDataService
-from main.domain.target_data_service import TargetDataService
-import pandas as pd
 
 
-# https://python-dependency-injector.ets-labs.org/introduction/di_in_python.html
 class TargetDataServiceImpl(TargetDataService):
     def __init__(self, clean_data_service: DataEtlService,
                  unique_products_service: UniqueProductsService,
@@ -26,8 +24,19 @@ class TargetDataServiceImpl(TargetDataService):
         all_products = self.unique_products_service.get_unique_products(cleaned_data)
         filtered_data = self.filtered_data_service.extract_data_based_on_number_of_years(cleaned_data)
         # print(filtered_data)
-        c_cmodel_data = self.modelling_technique_strategy.execute_strategy(ModelType.CMODEL, filtered_data, all_products, fe_product_growth)
-        linear_model_data = self.modelling_technique_strategy.execute_strategy(ModelType.LINEAR, filtered_data, all_products, fe_product_growth)
+        c_cmodel_data_frame = self.modelling_technique_strategy.execute_strategy(ModelType.CMODEL, filtered_data, all_products, fe_product_growth)
+        linear_model_data_frame = self.modelling_technique_strategy.execute_strategy(ModelType.LINEAR, filtered_data, all_products, fe_product_growth)
+        exponential_model_data_frame = self.modelling_technique_strategy.execute_strategy(ModelType.EXPONENTIAL, filtered_data, all_products, fe_product_growth)
 
-        # print(c_cmodel_data)
-        return c_cmodel_data
+        # sagemaker_model = self.get_sagemaker_model()  # worked like a charm
+
+        return c_cmodel_data_frame
+
+    def get_sagemaker_model(self):
+        api = "https://z0gyxki6ob.execute-api.us-east-1.amazonaws.com/prod/dummy"
+        http = urllib3.PoolManager()
+        response = http.request('GET', api)
+        # sage_maker_status = json.load(response.data.decode('utf-8'))
+        sage_maker_status = response.data
+        # print(sage_maker_status)
+        return sage_maker_status
