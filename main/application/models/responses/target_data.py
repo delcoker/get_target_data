@@ -1,35 +1,9 @@
-import json
-
-from main.application.models.responses.view_models.booking import Booking
-from main.application.models.responses.view_models.model_data import ModelData
-from main.application.models.responses.view_models.product_data import ProductData
-from main.application.models.responses.view_models.time_period import TimePeriod
-
-
-# df_joined_data = pd.read_pickle('resources/join_data_df.pkl')
+from main.application.models.responses.view_models.c_model_data import CModelData
 
 
 class TargetData:
 
-    def __init__(self, bookings: [Booking]):
-        self.bookings = bookings
-
-    def serialize(self, data_frame) -> str:
-
-        bookings = []
-
-        quarter_needs_to_be_removed = 0
-        for i, row in data_frame.iterrows():
-
-            if i % 3 == 0:
-                quarter_needs_to_be_removed = quarter_needs_to_be_removed + 1
-
-            time_period = TimePeriod(quarter=quarter_needs_to_be_removed, month=row['month'], month_name=row['monthName'], year=row['year']).__dict__
-            product_data = ProductData(group_id=i, group_name=row['Group Name'], total_revenue=row['c-model']).__dict__
-            model_data = ModelData().__dict__
-            booking = Booking(time_period=time_period, product_data=product_data, model_data=model_data).__dict__
-            bookings.append(booking)
-
-        serialized = json.dumps(bookings)
-
-        return serialized
+    def __init__(self, c_model_data: CModelData, linear_data=None, exponential_data=None):
+        self.cModelData = c_model_data
+        self.linearData = linear_data
+        self.exponentialData = exponential_data

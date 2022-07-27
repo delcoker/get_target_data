@@ -1,36 +1,28 @@
 import json
 import math
 
+from main.application.models.responses.target_data import TargetData
 from main.application.models.responses.view_models.booking import Booking
+from main.application.models.responses.view_models.c_model_data import CModelData
 from main.application.models.responses.view_models.model_data import ModelData
 from main.application.models.responses.view_models.product_data import ProductData
 from main.application.models.responses.view_models.time_period import TimePeriod
+from main.infrastructure.mappers.c_model_data_mapper import CModelDataMapper
+from main.infrastructure.mappers.c_model_data_mapper_impl import CModelDataMapperImpl
 from main.infrastructure.mappers.target_data_mapper import TargetDataMapper
 
 
 class TargetDataMapperImpl(TargetDataMapper):
 
-    def __init__(self):
-        pass
+    def __init__(self, c_model_data_mapper: CModelDataMapper):
+        self.c_model_data_mapper = c_model_data_mapper
 
     def serialize(self, target_data_frame) -> str:
-        bookings = []
 
-        for i, row in target_data_frame.iterrows():
+        c_model_data = self.c_model_data_mapper.serialize(c_model_data=target_data_frame)
 
-            time_period = TimePeriod(quarter=row['Quarter'], month=row['Month'], month_name=row['Month_Name'], year=row['Year']).__dict__
-            total_revenue = row['c_model']
-            if total_revenue is None or total_revenue == '' or math.isnan(total_revenue):
-                total_revenue = row['ARR']
-            product_data = ProductData(group_id=row['Product Name'], group_name=row['Product Name'], total_revenue=total_revenue).__dict__
-            model_data = ModelData(median=row['Median'],
-                                   growth_percent=row['Growth_Percent'],
-                                   growth_value=row['Growth_Value'],
-                                   median_growth=row['Median_Growth'],
-                                   mean_arr=row['Mean_ARR']).__dict__ if not math.isnan(row['c_model']) else ModelData().__dict__
-            booking = Booking(time_period=time_period, product_data=product_data, model_data=model_data).__dict__
-            bookings.append(booking)
+        target_data = TargetData(c_model_data=c_model_data).__dict__
 
-        serialized = json.dumps(bookings)
+        serialized = json.dumps(target_data)
 
         return serialized
