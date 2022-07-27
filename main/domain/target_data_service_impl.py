@@ -7,19 +7,22 @@ from main.domain.services.interfaces.data_etl_service import DataEtlService
 from main.domain.services.interfaces.extract_data_service import FilterDataService
 from main.domain.services.interfaces.extract_unique_products_service import UniqueProductsService
 from main.domain.target_data_service import TargetDataService
+from main.infrastructure.mappers.target_data_mapper import TargetDataMapper
 
 
 class TargetDataServiceImpl(TargetDataService):
     def __init__(self, clean_data_service: DataEtlService,
                  unique_products_service: UniqueProductsService,
                  filter_data_service: FilterDataService,
-                 modelling_technique_strategy: ModellingTechniqueContextI):
+                 modelling_technique_strategy: ModellingTechniqueContextI,
+                 target_data_mapper: TargetDataMapper):
         self.clean_data_service = clean_data_service
         self.unique_products_service = unique_products_service
         self.filtered_data_service = filter_data_service
         self.modelling_technique_strategy = modelling_technique_strategy
+        self.target_data_mapper = target_data_mapper
 
-    def get_target_data(self, fe_product_growth, dirty_data) -> DataFrame:
+    def get_target_data(self, fe_product_growth, dirty_data) -> str:
         cleaned_data = self.clean_data_service.standard_data_clean(dirty_data)
         all_products = self.unique_products_service.get_unique_products(cleaned_data)
         filtered_data = self.filtered_data_service.extract_data_based_on_number_of_years(cleaned_data)
@@ -30,7 +33,11 @@ class TargetDataServiceImpl(TargetDataService):
 
         # sagemaker_model = self.get_sagemaker_model()  # worked like a charm
 
-        return c_cmodel_data_frame
+        target_data_df = c_cmodel_data_frame  # concat linear_model_data_frame + exponential_model_data_frame
+
+        target_data = self.target_data_mapper.serialize(target_data_df)
+
+        return target_data
 
     def get_sagemaker_model(self):
         api = "https://z0gyxki6ob.execute-api.us-east-1.amazonaws.com/prod/dummy"

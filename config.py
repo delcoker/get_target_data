@@ -7,6 +7,8 @@ from main.domain.services.extract_unique_products_service_impl import ExtractUni
 from main.domain.services.strategies.modelling_techniques.c_model_service_impl import CModelServiceImpl
 from main.domain.target_data_service_impl import TargetDataServiceImpl
 from main.domain.services.forecast_months_service_impl import ForecastMonthsServiceImpl
+from main.infrastructure.mappers.c_model_data_mapper_impl import CModelDataMapperImpl
+from main.infrastructure.mappers.target_data_mapper_impl import TargetDataMapperImpl
 from main.infrastructure.repositories.file_repository_impl import FileRepositoryImpl
 
 clean_data_service = CleanDataServiceImpl()
@@ -15,6 +17,9 @@ filter_data_service = FilterDataByYearServiceImpl()
 attainment_table_strategy = AttainmentTableStrategyContext()
 forecast_months_service = ForecastMonthsServiceImpl()
 filter_closed_won_service = FilterClosedWonDataServiceImpl()
+c_model_mapper = CModelDataMapperImpl()
+
+target_data_mapper = TargetDataMapperImpl(c_model_data_mapper=c_model_mapper)
 
 c_model_service = CModelServiceImpl(attainment_table_strategy=attainment_table_strategy,
                                     forecast_months_service=forecast_months_service,
@@ -27,6 +32,7 @@ modelling_technique_strategy = ModellingTechniqueContext(attainment_table_strate
 target_data_service = TargetDataServiceImpl(clean_data_service=clean_data_service,
                                             unique_products_service=unique_products_service,
                                             filter_data_service=filter_data_service,
-                                            modelling_technique_strategy=modelling_technique_strategy)
+                                            modelling_technique_strategy=modelling_technique_strategy,
+                                            target_data_mapper=target_data_mapper)
 
 file_repository = FileRepositoryImpl()

@@ -4,8 +4,6 @@ import config
 # https://github.com/awslabs/aws-lambda-powertools-python/issues/924
 from main.domain.repositories.file_repository import FileRepository
 from main.domain.services.enums.file_type import FileType
-from main.infrastructure.mappers.c_model_data_mapper_impl import CModelDataMapperImpl
-from main.infrastructure.mappers.target_data_mapper_impl import TargetDataMapperImpl
 
 
 def lambda_handler(event, context,
@@ -18,12 +16,7 @@ def lambda_handler(event, context,
 
     df = get_s3_file_object(file_path, file_repository)
 
-    target_data_df = target_data_service.get_target_data(fe_product_growth, df)
-
-    target_data_mapper_service = TargetDataMapperImpl(CModelDataMapperImpl())  # should be injected from config
-    target_data = target_data_mapper_service.serialize(target_data_df)
-
-    print(target_data_df.columns)
+    target_data = target_data_service.get_target_data(fe_product_growth, df)
 
     return {
         'statusCode': 200,

@@ -19,7 +19,7 @@ class TargetDataMapperImpl(TargetDataMapper):
 
     def serialize(self, target_data_frame) -> str:
 
-        c_model_data = self.c_model_data_mapper.serialize(c_model_data=target_data_frame)
+        c_model_data = self.c_model_data_mapper.serialize(c_model_data_frame=target_data_frame)
 
         target_data = TargetData(c_model_data=c_model_data).__dict__
 
