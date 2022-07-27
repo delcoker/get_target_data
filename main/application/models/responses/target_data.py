@@ -3,7 +3,7 @@ from main.application.models.responses.view_models.c_model_data import CModelDat
 
 class TargetData:
 
-    def __init__(self, c_model_data: CModelData, linear_data=None, exponential_data=None):
+    def __init__(self, c_model_data: CModelData, linear_model_data=None, exponential_model_data=None):
         self.cModelData = c_model_data
-        self.linearData = linear_data
-        self.exponentialData = exponential_data
+        self.linearModelData = linear_model_data
+        self.exponentialModelData = exponential_model_data
